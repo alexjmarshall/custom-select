@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="/css/styles.css">
+  <title>Custom Select</title>
+</head>
+<body>
+  <div >
+    <!-- <i class="dropdown-caret-down fas fa-caret-down"></i>
+    
+    <i class="dropdown-caret-up d-none fas fa-caret-up"></i> -->
+
+    <div class="custom-select" role="combobox" aria-expanded="false" aria-labelledby="selected-1" id="custom-select-1"
+         tabindex="0">
+        <select role="textbox" required="required" autofocus="autofocus"
+                > <!--th:onchange="updateSelect(this)"-->
+            <option value="" default="default" selected="selected">Choose a fruit</option>
+            <option value="1">banana</option>
+            <option value="2">apple</option>
+            <option value="3">orange</option> <!--TODO get data as JSON from JS-->
+        </select>
+    </div>
+  </div>
+  <script src="/js/custom-select.js"></script>
+</body>
+</html>
