@@ -7,33 +7,24 @@
   <title>Custom Select</title>
 </head>
 <body>
-  <div >
-    <!-- <i class="dropdown-caret-down fas fa-caret-down"></i>
-    
-    <i class="dropdown-caret-up d-none fas fa-caret-up"></i> -->
-
-    <div class="custom-select" role="combobox" aria-expanded="false" aria-labelledby="selected-1" id="custom-select-1"
-         tabindex="0">
-        <select role="textbox" required="required" autofocus="autofocus" class="d-none"
-                > <!--th:onchange="updateSelect(this)"-->
-            <option value="" default="default" selected="selected">Choose a first fruit</option>
-            <option value="1">banana</option>
-            <option value="2">apple</option>
-            <option value="3">orange</option> <!--TODO get data as JSON from JS-->
-        </select>
-    </div>
-
-    <div class="custom-select" role="combobox" aria-expanded="false" aria-labelledby="selected-2" id="custom-select-2"
-         tabindex="0">
-        <select role="textbox" required="required" autofocus="autofocus" class="d-none"
-                > <!--th:onchange="updateSelect(this)"-->
-            <option value="" default="default" selected="selected">Choose a second fruit</option>
-            <option value="1">banana</option>
-            <option value="2">apple</option>
-            <option value="3">orange</option> <!--TODO get data as JSON from JS-->
-        </select>
-    </div>
+  <div class="custom-select" role="combobox" aria-expanded="false" id="custom-select-1" tabindex="0">
+      <select class="d-none">
+          <option value="" default="default" selected="selected">Choose a first fruit</option>
+          <option value="1">banana</option>
+          <option value="2">apple</option>
+          <option value="3">orange</option>
+      </select>
   </div>
+
+  <div class="custom-select" role="combobox" aria-expanded="false" id="custom-select-2" tabindex="0">
+      <select class="d-none">
+          <option value="" default="default" selected="selected">Choose a second fruit</option>
+          <option value="1">banana</option>
+          <option value="2">apple</option>
+          <option value="3">orange</option>
+      </select>
+  </div>
+
   <script src="/js/custom-select.js"></script>
 </body>
 </html>

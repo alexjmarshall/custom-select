@@ -4,7 +4,6 @@ window.onload = () => {
 
 function initCustomSelect() {
   let selects = document.querySelectorAll('select');
-
   selects.forEach(select => {
     buildSelect(select);
 
@@ -12,13 +11,10 @@ function initCustomSelect() {
       updateSelects(select);
     
     let customSel = select.parentElement;
-    customSel.addEventListener("click", onCustomSelClick);
-    customSel.addEventListener("keydown", onCustomSelKeydown);
+    customSel.addEventListener('click', onCustomSelClick);
+    customSel.addEventListener('keydown', onCustomSelKeydown);
   })
-  // $("select").each(function (index, select) {
-      
-  // });
-  document.addEventListener("click", closeAllSelect);
+  document.addEventListener('click', closeAllSelect);
 }
 
 function onCustomSelClick(e) {
@@ -31,66 +27,56 @@ function onCustomSelClick(e) {
 function onCustomSelKeydown(e) {
   e.stopPropagation();
 
-  let items = document.querySelector(".select-items"); //$(this).find(".select-items"); 
+  let items = document.querySelector('.select-items');
   
   if(e.keyCode === 13 || e.keyCode === 0 || e.keyCode === 32) { //enter or spacebar
     e.preventDefault();
+
     onCustomSelClick.call(this, e);
   } else if(e.keyCode === 27) { //escape
     hideItemList(items);
   } else if(e.keyCode === 40 || e.keyCode === 38) { //down or up arrow
     e.preventDefault();
 
-    if(!items.classList.contains("d-none"))//TODO d-none?
+    if(!items.classList.contains('d-none'))
       focusFirstItem(this);
     else if(e.keyCode === 40) //down arrow
-      clickNextItem(this, "down");
+      clickNextItem(this, 'down');
     else
-      clickNextItem(this, "up");
+      clickNextItem(this, 'up');
   }
 }
 
 function toggleSelect(select) {
-  let items = select.querySelector(".select-items");
-  if(items.classList.contains("d-none"))//TODO change d-none
+  let items = select.querySelector('.select-items');
+
+  if(items.classList.contains('d-none'))
     showItemList(items);
   else 
     hideItemList(items);
 }
 
 function showItemList(items) {
-  let select = items.closest(".custom-select");
-  select.setAttribute("aria-expanded", "true");
+  let select = items.closest('.custom-select');
+  select.setAttribute('aria-expanded', 'true');
 
-  items.classList.remove("d-none"); //TODO d-none
-
-  // let $downCaret = items.closest(".custom-select").siblings(".dropdown-caret-down");
-  // let $upCaret = $(items).closest(".custom-select").siblings(".dropdown-caret-up");
-  // $downCaret.addClass("d-none");
-  // $upCaret.removeClass("d-none");
+  items.classList.remove('d-none');
 }
 
 function hideItemList(items) {
-  let select = items.closest(".custom-select");
-  select.setAttribute("aria-expanded", "false");
+  let select = items.closest('.custom-select');
+  select.setAttribute('aria-expanded', 'false');
 
-  items.classList.add("d-none");
-
-  // var $downCaret = $(items).closest(".custom-select").siblings(".dropdown-caret-down");
-  // var $upCaret = $(items).closest(".custom-select").siblings(".dropdown-caret-up");
-  
-  // $downCaret.removeClass("d-none");
-  // $upCaret.addClass("d-none");
+  items.classList.add('d-none');
 }
 
 function closeAllSelect(select) {
-  /* close all select boxes except the current select box */
-  let itemLists = document.getElementsByClassName("select-items");
-  let selects = document.getElementsByClassName("custom-select");
-  let i, arrNo = [];
+  let selects = document.getElementsByClassName('custom-select');
+  let itemLists = document.getElementsByClassName('select-items');
+  let arrNo = [];
 
   for (i = 0; i < selects.length; i++) {
-    if (select == selects[i])
+    if (select === selects[i])
       arrNo.push(i)
   }
 
@@ -101,84 +87,82 @@ function closeAllSelect(select) {
 }
 
 function buildSelect(selElmnt) {
-  let customSel, selected, selectItems, i, item;
-  /* clear selected and items from custom select */
-  customSel = selElmnt.parentElement;
-  selected = customSel.querySelector(".select-selected"); //TODO getbyclassname
+  //clear selected and items from custom select
+  let customSel = selElmnt.parentElement;
+  let selected = customSel.querySelector('.select-selected');
   if(selected)
     selected.remove();
-  selectItems = customSel.querySelector(".select-items");
+
+  let selectItems = customSel.querySelector('.select-items');
   if(selectItems)
     selectItems.remove();
 
-  /* create new div for selected item */
-  selected = document.createElement("DIV");
+  //create new div for selected item
+  selected = document.createElement('DIV');
   selected.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
 
-  let customSelIdNo = customSel.getAttribute("id").replace("custom-select-", "");
-  selected.setAttribute("id", "selected-" + customSelIdNo);
-  selected.classList.add("select-selected");
-  // if(!selElmnt.options[selElmnt.selectedIndex].value)
-  //   $selected.addClass("grey-text");
+  let customSelIdNo = customSel.id.replace('custom-select-', '');
+  selected.id = `selected-${customSelIdNo}`;
+  selected.classList.add('select-selected');
+
   customSel.appendChild(selected);
+  customSel.setAttribute('aria-labelledby', selected.id);
 
-  //apply fade overflow effect
-  // applyFadeOverlay($selected[0]);
+  //create a new div for the item list
+  selectItems = document.createElement('DIV');
+  selectItems.classList.add('select-items');
+  selectItems.setAttribute('role', 'listbox');
 
-  /* create a new div for the item list */
-  selectItems = document.createElement("DIV");
-  selectItems.classList.add("select-items");
-  selectItems.setAttribute("role", "listbox");
-
-
-  /* create a new div for each item */
+  //create a new div for each item
   for (i = 0; i < selElmnt.length; i++) {
     if(!selElmnt.options[i].value)
       continue; //skip if option has no value
 
-    item = document.createElement("DIV");
+    let item = document.createElement('DIV');
     let option = selElmnt.options[i]
-    let text = option.text;
-    item.innerHTML = text;
-    item.setAttribute("id", "item-" + i);//+ customSelIdNo
-    item.setAttribute("tabindex", "0");
-    item.setAttribute("role", "option");
-    item.setAttribute("aria-selected", false);
+    let value = option.value;
+
+    item.innerHTML = option.text;
+    item.dataset.value = value;
+    item.id = `item-${customSelIdNo}${value}`;
+    item.classList.add('select-item');
+    item.setAttribute('tabindex', '0');
+    item.setAttribute('role', 'option');
     
     if(i === selElmnt.selectedIndex)
-      item.classList.add("same-as-selected");
-    item.addEventListener("click", onItemClick);
-    item.addEventListener("keydown", onItemKeydown);
+      item.setAttribute('aria-selected', true);
+    else
+      item.setAttribute('aria-selected', false);
+
+    item.addEventListener('click', onItemClick);
+    item.addEventListener('keydown', onItemKeydown);
     selectItems.appendChild(item); //add item to the item list
-    }
+  }
 
   customSel.appendChild(selectItems); //add item list to custom select
   hideItemList(selectItems);
 }
 
 function onItemClick(e) {
-  clickedItem = this;
-
-  //add aria-selected to this item and remove it from the others
-  // clickedItem.attr("aria-selected", true); 
-  // clickedItem.siblings().attr("aria-selected", false); TODO - vanilla JS
-  
   e.stopPropagation();
 
-  let customSel, selected, select, i, selectedItem;
-  customSel = clickedItem.closest(".custom-select");
-  // customSel.attr("aria-activedescendant", $clickedItem.attr("id"));
-  selected = customSel.querySelector(".select-selected");
-  // selected.classList.remove("grey-text");
-  select = customSel.querySelector("select");
-  selectedItem = clickedItem.parentElement.querySelector(".same-as-selected");
+  let clickedItem = this;
+  //add aria-selected to this item and remove it from the others
+  clickedItem.setAttribute('aria-selected', true);
+  otherItems = getElementSiblings(clickedItem);
+  for(item of otherItems)
+    item.setAttribute('aria-selected', false);
 
+  let customSel = clickedItem.closest('.custom-select');
+  customSel.setAttribute('aria-activedescendant', clickedItem.id);
+
+  //update selectedIndex of backing select and text of selected div
+  let select = customSel.querySelector('select');
+  let selected = customSel.querySelector('.select-selected');
   for (i = 0; i < select.length; i++) {
-    if (select.options[i].innerHTML === clickedItem.innerHTML) {
+    if (select.options[i].value === clickedItem.dataset.value) {
       select.selectedIndex = i;
       selected.innerHTML = clickedItem.innerHTML;
-      if(selectedItem) selectedItem.classList.remove("same-as-selected");
-      clickedItem.classList.add("same-as-selected");
       break;
     }
   }
@@ -186,20 +170,25 @@ function onItemClick(e) {
   updateSelects(select);
   customSel.click();
   customSel.focus();
-  //apply fade overflow effect
-  // applyFadeOverlay($selected[0]);
 }
 
-// function applyFadeOverlay(elm) {
-//   var $elm = $(elm);
-//   var overflowRight = elm.scrollWidth - ($elm.innerWidth() + elm.scrollLeft) > 2; //2px margin of error
-//   overflowRight ? $elm.addClass('fade-overlay') : $elm.removeClass('fade-overlay');
-// }
+function getElementSiblings(elm) {
+  let sibs = [];
+  let sib = elm.parentElement.firstChild;
+
+  while(sib) {
+    if(sib !== elm)
+      sibs.push(sib);
+    sib = sib.nextElementSibling;
+  }
+
+  return sibs;
+}
 
 function onItemKeydown(e) {
   e.stopPropagation();
 
-  let customSel = this.closest(".custom-select");
+  let customSel = this.closest('.custom-select');
 
   if(e.keyCode === 13) { //enter
     e.preventDefault();
@@ -207,45 +196,56 @@ function onItemKeydown(e) {
   } else if (e.keyCode === 27) { //escape
     customSel.click();
     customSel.focus();
-  } else if (e.keyCode == 40) { //down arrow
+  } else if (e.keyCode === 40) { //down arrow
     e.preventDefault();
-    this.nextElementSibling.focus();
+    nextItem = this.nextElementSibling;
+    if(nextItem) 
+      nextItem.focus();
   } else if (e.keyCode === 38) { //up arrow
     e.preventDefault();
-    this.previousElementSibling.focus();
+    prevItem = this.previousElementSibling;
+    if(prevItem)
+      prevItem.focus();
   }
 }
 
 function focusFirstItem(select) {
-  let items = select.querySelectorAll(".select-items");
-  let firstItem = items[0]; //TODO fix?
+  let items = select.querySelectorAll('.select-item');
+  let firstItem = items[0];
   firstItem.focus();
 }
 
 function clickNextItem(select, direction) {
-  let items = select.querySelector(".select-items");
-  let selectedItem = items.querySelector(".same-as-selected");
+  let items = select.querySelector('.select-items');
+  let selectedItem = items.querySelector('[aria-selected=true]');
 
-  if(!selectedItem) { //if no option selected yet, select first -- TODO fix?
-    items.querySelector(":first-child").click();
-    items.parentElement.click();
+  //if no option selected yet, select first
+  if(!selectedItem) { 
+    items.querySelector(':first-child').click();
+    select.click();
   } else {
-    if(direction === "down" && selectedItem.nextElementSibling) {
-      selectedItem.nextElementSibling.click();
-      items.parentElement.click();
-    } else if(direction === "up" && selectedItem.previousElementSibling){
+    if(direction === 'down' && selectedItem.nextElementSibling) {
+      if(selectedItem)
+        selectedItem.nextElementSibling.click();
+      else
+      items.querySelector(':first-child').click();
+      select.click();
+    } else if(direction === 'up' && selectedItem.previousElementSibling){
       selectedItem.previousElementSibling.click();
-      items.parentElement.click();
+      select.click();
     }
   }
 }
 
 function updateSelects(context) {
-  let afterVal, afterText, prevVal, prevText, containsPrevVal; 
-  if(context.querySelector("option[value='']")) context.querySelector("option[value='']").remove();
-  afterVal = context.value;
-  afterText = context.querySelector("option:checked").innerText; //TODO fix?
+  let emptyOption = context.querySelector('option[value=""]');
+  if(emptyOption)
+    emptyOption.remove();
 
+  let afterVal = context.value;
+  let afterText = context.querySelector('option:checked').innerText;
+
+  let prevVal, prevText;
   if(context.dataset.prev) {
     let json = context.dataset.prev;
     let data = JSON.parse(json);
@@ -253,39 +253,45 @@ function updateSelects(context) {
     prevText = data.text;
   }
 
-  for(select of document.querySelectorAll("select")) {
-      if(select !== context) {
-          if(select.querySelector("option[value='" + afterVal + "']")) select.querySelector("option[value='" + afterVal + "']").remove();//TODO template literal and cahe!
-          containsPrevVal = select.querySelector("option[value='" + prevVal + "']")//TODO boolean?
-          if(prevVal && prevVal !== afterVal && !containsPrevVal) {
-              select.appendChild(new Option(prevText, prevVal));
-              sortSelect(select);
-          }
-          buildSelect(select);
-      }
-  }
+  //update other selects
+  for(select of document.querySelectorAll('select')) {
+    if(select === context)
+      continue;
 
-  context.dataset.prev = `{"val":"${afterVal}", "text":"${afterText}"}`; //TODO conditional?
+    //remove selected option from other selects
+    let afterValOption = select.querySelector(`option[value='${afterVal}']`);
+    let isSelectModified = false;
+    if(afterValOption) {
+      afterValOption.remove();
+      isSelectModified = true;
+    }
+
+    //add previously selected option back to other selects
+    let prevValOption = select.querySelector(`option[value='${prevVal}']`);
+    if(prevVal && prevVal !== afterVal && !prevValOption) {
+      select.appendChild(new Option(prevText, prevVal));
+      sortSelect(select);
+      isSelectModified = true;
+    }
+
+    if(isSelectModified)
+      buildSelect(select);
+  }
+  //update data storing previously selected option
+  context.dataset.prev = `{"val":"${afterVal}", "text":"${afterText}"}`;
 }
 
 function sortSelect(select) {
-  var selectedVal = select.value;
-  var arr = (function(nl) {
-    var a = [];
-    for (var i = 0; i < nl.length; i++) //TODO for of or for in
-      a.push(nl.item(i));
-    return a;
-  })(select.options);
+  let selectedVal = select.value;
+  let arr = Array.from(select.options);
 
-  arr.sort(function(a,b){
-    return a.value - b.value;
-  });
+  arr.sort((a,b) => a.value - b.value);
 
-  // $(select).empty();
   for(child of select.children)
     child.remove();
-  for (var i = 0; i < arr.length; i++)
-    select.add(arr[i]);
+
+  for (option of arr)
+    select.add(option);
 
   select.value = selectedVal;
 }
