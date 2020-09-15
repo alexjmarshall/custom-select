@@ -1,9 +1,5 @@
 window.onload = () => {
   initCustomSelect();
-  // var activeElem = document.activeElement;
-  // if(activeElem.tagName !== "INPUT" && !activeElem.classList.contains("custom-select")) {
-  //     $(".custom-select").first().focus();
-  // }
 };
 
 function initCustomSelect() {
@@ -111,9 +107,9 @@ function buildSelect(selElmnt) {
   selected = customSel.querySelector(".select-selected"); //TODO getbyclassname
   if(selected)
     selected.remove();
-  selectItems = customSel.getElementsByClassName(".select-items");
-  for(item of selectItems)
-    item.remove();
+  selectItems = customSel.querySelector(".select-items");
+  if(selectItems)
+    selectItems.remove();
 
   /* create new div for selected item */
   selected = document.createElement("DIV");
@@ -262,7 +258,7 @@ function updateSelects(context) {
           if(select.querySelector("option[value='" + afterVal + "']")) select.querySelector("option[value='" + afterVal + "']").remove();//TODO template literal and cahe!
           containsPrevVal = select.querySelector("option[value='" + prevVal + "']")//TODO boolean?
           if(prevVal && prevVal !== afterVal && !containsPrevVal) {
-              $select.appendChild(new Option(prevText, prevVal));
+              select.appendChild(new Option(prevText, prevVal));
               sortSelect(select);
           }
           buildSelect(select);
@@ -285,7 +281,7 @@ function sortSelect(select) {
     return a.value - b.value;
   });
 
-  $(select).empty();
+  // $(select).empty();
   for(child of select.children)
     child.remove();
   for (var i = 0; i < arr.length; i++)

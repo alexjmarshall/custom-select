@@ -14,9 +14,20 @@
 
     <div class="custom-select" role="combobox" aria-expanded="false" aria-labelledby="selected-1" id="custom-select-1"
          tabindex="0">
-        <select role="textbox" required="required" autofocus="autofocus"
+        <select role="textbox" required="required" autofocus="autofocus" class="d-none"
                 > <!--th:onchange="updateSelect(this)"-->
-            <option value="" default="default" selected="selected">Choose a fruit</option>
+            <option value="" default="default" selected="selected">Choose a first fruit</option>
+            <option value="1">banana</option>
+            <option value="2">apple</option>
+            <option value="3">orange</option> <!--TODO get data as JSON from JS-->
+        </select>
+    </div>
+
+    <div class="custom-select" role="combobox" aria-expanded="false" aria-labelledby="selected-2" id="custom-select-2"
+         tabindex="0">
+        <select role="textbox" required="required" autofocus="autofocus" class="d-none"
+                > <!--th:onchange="updateSelect(this)"-->
+            <option value="" default="default" selected="selected">Choose a second fruit</option>
             <option value="1">banana</option>
             <option value="2">apple</option>
             <option value="3">orange</option> <!--TODO get data as JSON from JS-->
