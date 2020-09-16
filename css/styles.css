@@ -1,13 +1,11 @@
 .d-none {
   display: none;
 }
-
 .custom-select {
   width: 10rem;
   border: 2px solid black;
   margin: 1rem 0;
 }
-
 .select-items {
   position: absolute;
   left: 0.5rem;
