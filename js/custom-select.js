@@ -27,7 +27,7 @@ function onCustomSelClick(e) {
 function onCustomSelKeydown(e) {
   e.stopPropagation();
 
-  let items = document.querySelector('.select-items');
+  let items = this.querySelector('.select-items');
   
   if(e.keyCode === 13 || e.keyCode === 0 || e.keyCode === 32) { //enter or spacebar
     e.preventDefault();
