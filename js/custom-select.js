@@ -57,17 +57,27 @@ function toggleSelect(select) {
 }
 
 function showItemList(items) {
-  let select = items.closest('.custom-select');
-  select.setAttribute('aria-expanded', 'true');
-
+  let customSel = items.closest('.custom-select');
+  customSel.setAttribute('aria-expanded', 'true');
   items.classList.remove('d-none');
+
+  //toggle display of caret icons
+  let downCaret = customSel.querySelector('#down-caret');
+  downCaret.classList.add('d-none');
+  let upCaret = customSel.querySelector('#up-caret');
+  upCaret.classList.remove('d-none');
 }
 
 function hideItemList(items) {
-  let select = items.closest('.custom-select');
-  select.setAttribute('aria-expanded', 'false');
-
+  let customSel = items.closest('.custom-select');
+  customSel.setAttribute('aria-expanded', 'false');
   items.classList.add('d-none');
+
+  //toggle display of caret icons
+  let downCaret = customSel.querySelector('#down-caret');
+  downCaret.classList.remove('d-none');
+  let upCaret = customSel.querySelector('#up-caret');
+  upCaret.classList.add('d-none');
 }
 
 function closeAllSelect(select) {

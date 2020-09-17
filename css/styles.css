@@ -14,3 +14,11 @@
   margin-left: -1px;
   background-color: white;
 }
+.select-selected, .select-item {
+  padding: 0 0.2rem;
+}
+.down-caret, .up-caret {
+  height: 1rem;
+  position: absolute;
+  right: 0.2rem;
+}
