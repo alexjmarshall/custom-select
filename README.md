@@ -1,4 +1,4 @@
 # custom-select
 Custom select element generated with JavaScript.
 
-UpdateSelects() function removes a selected option from all other selects on the page.
+Selected option is removed from the option list of other Custom Selects on the page.
