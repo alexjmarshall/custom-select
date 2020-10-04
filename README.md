@@ -1,6 +1,4 @@
 # custom-select
-Custom select element generated with vanilla JavaScript and CSS.
+Custom select element generated with JavaScript.
 
-Includes WAI-ARIA role, aria-expanded, aria-selected, aria-labelledby and aria-activedescendant attributes for accessibility.
-
-UpdateSelects() function removes a selected option from all other selects on page.
+UpdateSelects() function removes a selected option from all other selects on the page.
