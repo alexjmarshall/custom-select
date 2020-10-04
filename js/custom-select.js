@@ -164,8 +164,6 @@ function onItemClick(e) {
     item.setAttribute('aria-selected', false);
 
   let customSel = clickedItem.closest('.custom-select');
-  customSel.setAttribute('aria-activedescendant', clickedItem.id);
-
   //update selectedIndex of backing select and text of selected div
   let select = customSel.querySelector('select');
   let selected = customSel.querySelector('.select-selected');
